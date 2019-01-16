@@ -46,7 +46,7 @@ public class SelectorTest {
       int[] m = {1, 1, 1, 1, 1, 1};
       int[] expected = {1, 1, 1, 1, 1, 1};
       int[] actual = Selector.range(m, 1, 1);
-      assertEquals(expected[3], actual[3]);
+      assertEquals(expected[2], actual[2]);
    }
 
 

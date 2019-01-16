@@ -1,4 +1,4 @@
-import java.util.Arrays;
+//import java.util.Arrays;
 
 
 /**
@@ -27,12 +27,14 @@ public final class Selector {
     * length. The array a is not changed by this method.
     */
    public static int min(int[] a) {
-      if (a.length == 0) {
-         throw new IllegalArgumentException("array has length of 0");
-      }
+      
       
       if (a == null) {
          throw new IllegalArgumentException("array is null");
+      }
+      
+      if (a.length == 0) {
+         throw new IllegalArgumentException("array has length of 0");
       }
       
       
@@ -56,12 +58,14 @@ public final class Selector {
     * length. The array a is not changed by this method.
     */
    public static int max(int[] a) {
-      if (a.length == 0) {
-         throw new IllegalArgumentException("array has length of 0");
-      }
+     
       
       if (a == null) {
          throw new IllegalArgumentException("array is null");
+      }
+      
+      if (a.length == 0) {
+         throw new IllegalArgumentException("array has length of 0");
       }
       
       int maximum = a[0];
@@ -116,12 +120,14 @@ public final class Selector {
     * The array a is not changed by this method.
     */
    public static int[] range(int[] a, int low, int high) {
-      if (a.length == 0) {
-         throw new IllegalArgumentException("array has length of 0");
-      }
+      
       
       if (a == null) {
          throw new IllegalArgumentException("array is null");
+      }
+      
+      if (a.length == 0) {
+         throw new IllegalArgumentException("array has length of 0");
       }
       
       
@@ -132,21 +138,21 @@ public final class Selector {
             inc++;
          }
       }
-      int[] rangeList = new int[inc];
+      int[] range = new int[inc];
       int j = 0;
-      for (int k = 0; k < rangeList.length + 1; k++) {
+      for (int k = 0; k < a.length; k++) {
          
          if ((a[k] >= low) && (a[k] <= high)) {
-            rangeList[j] = a[k];
+            range[j] = a[k];
             j++;
          }
       }
       
       
-      
-      return rangeList;
+      return range;
    }
-
+   
+    
 
    /**
     * Returns the smallest value in a that is greater than or equal to
