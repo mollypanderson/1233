@@ -36,11 +36,10 @@ public final class Selector {
       }
       
       
-      
       int minimum = a[0];
       
       for (int i = 1; i < a.length; i++) {
-         //int current = a[i];
+         
          if (a[i] < minimum) {
             minimum = a[i];
          }
@@ -129,7 +128,7 @@ public final class Selector {
       int inc = 0;
    
       for (int i = 0; i < a.length; i++) {
-         if ((a[i] > low) && (a[i] < high)) {
+         if ((a[i] >= low) && (a[i] <= high)) {
             inc++;
          }
       }
@@ -137,7 +136,7 @@ public final class Selector {
       int j = 0;
       for (int k = 0; k < rangeList.length + 1; k++) {
          
-         if ((a[k] > low) && (a[k] < high)) {
+         if ((a[k] >= low) && (a[k] <= high)) {
             rangeList[j] = a[k];
             j++;
          }

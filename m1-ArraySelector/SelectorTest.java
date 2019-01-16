@@ -42,6 +42,13 @@ public class SelectorTest {
    }
 
 
+   @Test public void rangeTestTwo() {
+      int[] m = {1, 1, 1, 1, 1, 1};
+      int[] expected = {1, 1, 1, 1, 1, 1};
+      int[] actual = Selector.range(m, 1, 1);
+      assertEquals(expected[3], actual[3]);
+   }
+
 
 
 }
