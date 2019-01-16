@@ -1,4 +1,4 @@
-//import java.util.Arrays;
+import java.util.Arrays;
 
 
 /**
@@ -89,8 +89,48 @@ public final class Selector {
     * the number of distinct values in the array. The array a is not
     * changed by this method.
     */
+    
+    
    public static int kmin(int[] a, int k) {
-      return -99;
+         
+      int kminimum = -1;
+      int distinct = 1;
+      if (a == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+      
+      if (a.length == 0) {
+         throw new IllegalArgumentException("array has length of 0");
+      }
+      if (k > a.length) {
+         throw new IllegalArgumentException("k is greater than the number of"
+                                          + " elements in the array"); 
+      }
+      if (k < 1) {
+         throw new IllegalArgumentException("k is less than 1");
+      }
+     
+   
+      // sort the array into ascending order
+      Arrays.sort(a); 
+      
+      for (int i = 0; i < a.length - 1; i++) {
+         if (!(a[i] == a[i+1])) {
+            distinct++;
+         }
+      }
+      
+      if (k > distinct) {
+         throw new IllegalArgumentException("k is greater than the number"
+                                          + " of distinct values in the array");
+      }
+      
+      int duplicates = a.length - distinct;
+      
+      kminimum = a[k-1 + duplicates];          
+      
+                    
+      return kminimum;
    }
 
 
@@ -162,7 +202,37 @@ public final class Selector {
     * The array a is not changed by this method.
     */
    public static int ceiling(int[] a, int key) {
-      return -99;
+      int c = -1;
+      
+      if (a == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+      
+      if (a.length == 0) {
+         throw new IllegalArgumentException("array has length of 0");
+      }
+      
+      for (int i = 0; i < a.length; i++) {
+         if (a[i] >= key) {
+            c = a[i];
+            break;
+         }
+         
+      }
+      
+      for (int i = 0; i < a.length; i++) {
+         
+         if ((a[i] >= key) && (a[i] < c)) {
+            c = a[i];
+         }
+         
+      }
+      
+      if (c == -1) {
+         throw new IllegalArgumentException("no qualifying value");
+      }
+      
+      return c;
    }
 
 
@@ -174,7 +244,38 @@ public final class Selector {
     * The array a is not changed by this method.
     */
    public static int floor(int[] a, int key) {
-      return -99;
+      int f = -1;
+      
+      if (a == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+      
+      if (a.length == 0) {
+         throw new IllegalArgumentException("array has length of 0");
+      }
+   
+      for (int i = 0; i < a.length; i++) {
+         if (a[i] <= key) {
+            f = a[i];
+            break;
+         }
+         
+      
+      }
+         
+      for (int i = 0; i < a.length; i++) {
+         
+         if ((a[i] <= key) && (a[i] > f)) {
+            f = a[i];
+         }
+         
+      }
+   
+      if (f == -1) {
+         throw new IllegalArgumentException("no qualifying value");
+      }
+      
+      return f;
    }
 
 }
