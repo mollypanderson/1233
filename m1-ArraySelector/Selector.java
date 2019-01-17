@@ -1,6 +1,7 @@
 import java.util.Arrays;
 
 
+
 /**
 * Defines a library of selection methods
 * on arrays of ints.
@@ -92,8 +93,8 @@ public final class Selector {
     
     
    public static int kmin(int[] a, int k) {
-         
-      int kminimum = -1;
+      
+      
       int distinct = 1;
       if (a == null) {
          throw new IllegalArgumentException("array is null");
@@ -109,28 +110,46 @@ public final class Selector {
       if (k < 1) {
          throw new IllegalArgumentException("k is less than 1");
       }
-     
-   
+       
+      // make a copy of the array
+      int[] aCopy = new int[a.length]; 
+      
+      
+      for (int i = 0; i < a.length; i++) {
+         aCopy[i] = a[i];
+      }
+            
       // sort the array into ascending order
-      Arrays.sort(a); 
+      Arrays.sort(aCopy); 
+      
+      // create a new array with only distinct values
+      int[] uniqueArr = new int[a.length];
+      int j = 0;
       
       for (int i = 0; i < a.length - 1; i++) {
-         if (!(a[i] == a[i+1])) {
-            distinct++;
-         }
+         if (aCopy[i] != aCopy[i + 1]) {
+            uniqueArr[j++] = aCopy[i];
+         } 
+         
+         
       }
       
-      if (k > distinct) {
+      uniqueArr[j++] = aCopy[aCopy.length - 1];
+      
+               
+               
+      if (k > uniqueArr.length) {
          throw new IllegalArgumentException("k is greater than the number"
                                           + " of distinct values in the array");
       }
       
-      int duplicates = a.length - distinct;
       
-      kminimum = a[k-1 + duplicates];          
+      int kminimum = uniqueArr[k - 1];          
       
                     
       return kminimum;
+   
+   
    }
 
 
@@ -143,7 +162,75 @@ public final class Selector {
     * changed by this method.
     */
    public static int kmax(int[] a, int k) {
-      return -99;
+      
+   
+      int distinct = 1;
+      if (a == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+      
+      if (a.length == 0) {
+         throw new IllegalArgumentException("array has length of 0");
+      }
+      if (k > a.length) {
+         throw new IllegalArgumentException("k is greater than the number of"
+                                          + " elements in the array"); 
+      }
+      if (k < 1) {
+         throw new IllegalArgumentException("k is less than 1");
+      }
+       
+      // make a copy of the array
+      int[] aCopy = new int[a.length]; 
+      
+      
+      for (int i = 0; i < a.length; i++) {
+         aCopy[i] = a[i];
+      }
+            
+      // sort the array into ascending order
+      Arrays.sort(aCopy); 
+      
+      // sort the array into descending order
+      int last = aCopy.length - 1;
+      int middle = aCopy.length / 2;
+      for (int i = 0; i <= middle; i++) {
+         int temp = aCopy[i];
+         aCopy[i] = aCopy[last - i];
+         aCopy[last - i] = temp;
+         
+      }
+      
+       // create a new array with only distinct values
+      int[] uniqueArr = new int[a.length];
+      int j = 0;
+      
+      for (int i = 0; i < a.length - 1; i++) {
+         if (aCopy[i] != aCopy[i + 1]) {
+            uniqueArr[j++] = aCopy[i];
+         } 
+         
+         
+      }
+      
+      uniqueArr[j++] = aCopy[aCopy.length - 1];
+      
+               
+               
+      if (k > uniqueArr.length) {
+         throw new IllegalArgumentException("k is greater than the number"
+                                          + " of distinct values in the array");
+      }
+      
+      
+      int kmaximum = uniqueArr[k - 1];          
+      
+                    
+     
+      
+   
+                    
+      return kmaximum;
    }
 
 
@@ -233,6 +320,7 @@ public final class Selector {
       }
       
       return c;
+   
    }
 
 
@@ -276,6 +364,6 @@ public final class Selector {
       }
       
       return f;
+   
    }
-
 }

@@ -146,6 +146,42 @@ public class SelectorTest {
       int actual = Selector.kmin(m, 3);
       assertEquals(expected, actual);
    }
+   
+   @Test public void kmaxTestOne() {
+      int[] m = {5, 9, 1, 7, 3};
+      
+      int expected = 5;
+      int actual = Selector.kmax(m, 3);
+      assertEquals(expected, actual);
+   }
+   
+   @Test public void kmaxTestTwo() {
+      int[] m = {2, 8, 7, 3, 4};
+      
+      int expected = 8;
+      int actual = Selector.kmax(m, 1);
+      assertEquals(expected, actual);
+   }
+   
+   @Test public void kmaxTestThree() {
+      int[] m = {8, 7, 6, 5, 4};
+      
+      int expected = 4;
+      int actual = Selector.kmax(m, 5);
+      assertEquals(expected, actual);
+   }
+   
+   @Test public void kmaxTestFour() {
+      int[] m = {2, 8, 7, 7, 3, 3, 4};
+      
+      int expected = 4;
+      int actual = Selector.kmax(m, 3);
+      assertEquals(expected, actual);
+   }
+
+
+
+
 
 
 

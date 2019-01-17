@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Canvas xmlns="http://www.jgrasp.org">
+  <Language>Java</Language>
+  <ShowTypes>false</ShowTypes>
+  <Version>2</Version>
+  <Grid>
+    <Snap>true</Snap>
+    <Show>false</Show>
+  </Grid>
+  <Frame>
+    <Bounds>
+      <AutoSize>true</AutoSize>
+      <X>100</X>
+      <Y>120</Y>
+      <W>309</W>
+      <H>74</H>
+    </Bounds>
+    <Viewer>
+      <Expression>m</Expression>
+      <ViewerClass>jgrasp_viewers._X_A_PresentationView</ViewerClass>
+    </Viewer>
+  </Frame>
+  <Size>
+    <W>640</W>
+    <H>400</H>
+  </Size>
+  <ESize>
+    <W>640</W>
+    <H>400</H>
+  </ESize>
+</Canvas>
