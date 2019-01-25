@@ -178,6 +178,67 @@ public class SelectorTest {
       int actual = Selector.kmax(m, 3);
       assertEquals(expected, actual);
    }
+   
+   @Test public void kminTestSix() {
+      int[] m = {0, 0, 3, 5, 6, 6, 0};
+      
+      int expected = 5;
+      int actual = Selector.kmin(m, 3);
+      assertEquals(expected, actual);
+   }
+   
+   @Test public void kmaxTestFive() {
+      int[] m = {0, 0, 3, 5, 6, 6, 0};
+      
+      int expected = 3;
+      int actual = Selector.kmax(m, 3);
+      assertEquals(expected, actual);
+   }
+   
+   @Test public void kmaxTestSix() {
+      int[] m = {0, 0, 3, 5, 6, 6, 0};
+      
+      int expected = 5;
+      int actual = Selector.kmax(m, 2);
+      assertEquals(expected, actual);
+   }
+   
+   @Test public void kmaxTestSeven() {
+      int[] m = {0, 0, 0, 0};
+      
+      int expected = 0;
+      int actual = Selector.kmax(m, 1);
+      assertEquals(expected, actual);
+   }
+   
+   @Test public void kminTestEight() {
+      int[] m = {1, 6, 5, 5, 2, 1, 2, 3, 0, 4, 0, 4, 4, 0};
+      
+      int expected = 2;
+      int actual = Selector.kmin(m, 3);
+      assertEquals(expected, actual);
+   }
+   
+   @Test public void kmaxTestEight() {
+      int[] m = {1, 6, 5, 5, 2, 1, 2, 3, 0, 4, 0, 4, 4, 0};
+      
+      int expected = 1;
+      int actual = Selector.kmax(m, 8);
+      assertEquals(expected, actual);
+   }
+   
+   @Test public void kminTestNine() {
+      int[] m = {1, 6, 5, 5, 2, 1, 2, 3, 0, 4, 0, 4, 4, 0};
+      
+      int expected = 1;
+      int actual = Selector.kmin(m, 8);
+      assertEquals(expected, actual);
+   }
+
+
+
+
+
 
 
 

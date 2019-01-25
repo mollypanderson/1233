@@ -122,8 +122,15 @@ public final class Selector {
       // sort the array into ascending order
       Arrays.sort(aCopy); 
       
+      // count number of distinct values
+      for (int i = 0; i < a.length - 1; i++) {
+         if (!(aCopy[i] == aCopy[i + 1])) {
+            distinct++;
+         }
+      }
+      
       // create a new array with only distinct values
-      int[] uniqueArr = new int[a.length];
+      int[] uniqueArr = new int[distinct];
       int j = 0;
       
       for (int i = 0; i < a.length - 1; i++) {
@@ -136,7 +143,8 @@ public final class Selector {
       
       uniqueArr[j++] = aCopy[aCopy.length - 1];
       
-               
+       // create a new size array stop when you hit 0 
+              
                
       if (k > uniqueArr.length) {
          throw new IllegalArgumentException("k is greater than the number"
@@ -163,7 +171,7 @@ public final class Selector {
     */
    public static int kmax(int[] a, int k) {
       
-   
+            
       int distinct = 1;
       if (a == null) {
          throw new IllegalArgumentException("array is null");
@@ -194,15 +202,23 @@ public final class Selector {
       // sort the array into descending order
       int last = aCopy.length - 1;
       int middle = aCopy.length / 2;
-      for (int i = 0; i <= middle; i++) {
+      for (int i = 0; i < middle; i++) {
          int temp = aCopy[i];
          aCopy[i] = aCopy[last - i];
          aCopy[last - i] = temp;
          
       }
       
+      // count number of distinct values
+      for (int i = 0; i < a.length - 1; i++) {
+         if (!(aCopy[i] == aCopy[i + 1])) {
+            distinct++;
+         }
+      }
+   
+      
        // create a new array with only distinct values
-      int[] uniqueArr = new int[a.length];
+      int[] uniqueArr = new int[distinct];
       int j = 0;
       
       for (int i = 0; i < a.length - 1; i++) {
