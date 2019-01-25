@@ -45,6 +45,11 @@ public final class Selector {
          throw new IllegalArgumentException("array is null");
       }
       
+      if (comp == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+   
+      
       if (coll.size() == 0) {
          throw new NoSuchElementException("array has length of 0");
       }
@@ -85,6 +90,11 @@ public final class Selector {
          throw new IllegalArgumentException("array is null");
       }
       
+      if (comp == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+   
+      
       if (coll.size() == 0) {
          throw new NoSuchElementException("array has length of 0");
       }
@@ -121,6 +131,39 @@ public final class Selector {
     * @throws        NoSuchElementException as per above
     */
    public static <T> T kmin(Collection<T> coll, int k, Comparator<T> comp) {
+      
+      // collection is null, illegalargumentexception
+      if (coll == null) {
+         throw new IllegalArgumentException("collection is null");
+      }
+      
+      // comparator is null, illegalargumentexception
+      if (comp == null) {
+         throw new IllegalArgumentException("Comparator is null");
+      }
+      
+      // collection is empty, nosuchelementexception
+      if (coll.size() == 0) {
+         throw new NoSuchElementException("collection is empty");
+      }
+      
+      // no kth min value (k < 1, k > coll.size(), k > distinct values in coll), nosuchelementexception
+      if (k < 1) {
+         throw new NoSuchElementException("no kth value: k is less than 1");
+      }
+      
+      
+      
+      // sort the array into whatever order, using comp as the param
+      java.util.Collections.sort(coll, comp);
+      
+      // count distinct values in coll
+      
+      // create a new array with only distinct values
+      
+      // save kminimum value
+      
+      
       return null;
    }
 
@@ -165,7 +208,38 @@ public final class Selector {
     */
    public static <T> Collection<T> range(Collection<T> coll, T low, T high,
                                          Comparator<T> comp) {
-      return null;
+      if (coll == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+      
+      // comparator is null
+      if (comp == null) {
+         throw new NoSuchElementException("array has length of 0");
+      }
+      
+      
+      // create a new ArrayList to copy into
+      ArrayList<T> rangeList = new ArrayList<T>();
+      
+      
+      // for each element int he original array, check if the
+      // element is within the range
+      
+      for (T element : coll) {
+         if ((comp.compare(element, low) >= 0) && (comp.compare(element, high) <= 0)) {
+            // add the value to rangeList
+            rangeList.add(element);
+            
+         }
+      }
+      
+      // no qualifying values for range
+      if (rangeList.size() == 0) {
+         throw new NoSuchElementException("array has length of 0");
+      
+      }
+      
+      return rangeList;
    }
 
 
@@ -185,7 +259,48 @@ public final class Selector {
     * @throws        NoSuchElementException as per above
     */
    public static <T> T ceiling(Collection<T> coll, T key, Comparator<T> comp) {
-      return null;
+      
+      
+      
+      if (coll == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+      
+      if (comp == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+   
+      
+      if (coll.size() == 0) {
+         throw new NoSuchElementException("array has length of 0");
+      }
+      
+      // search the collection looking for the c value
+      
+      T c = null;
+      for (T element : coll) {
+         if (comp.compare(element, key) >= 0) {
+            c = element;
+            break;
+         }
+      }
+      
+      for (T element : coll) {
+         
+         if ((comp.compare(element, key) >= 0) && (comp.compare(element, c) < 0)) {
+            c = element;
+         }
+      }
+      
+      
+      // if no ceiling is found
+      if (c == null) {
+         throw new NoSuchElementException("array has length of 0");
+      }
+   
+   
+      
+      return c;
    }
 
 
@@ -205,7 +320,47 @@ public final class Selector {
     * @throws        NoSuchElementException as per above
     */
    public static <T> T floor(Collection<T> coll, T key, Comparator<T> comp) {
-      return null;
+      
+      if (coll == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+      
+      if (comp == null) {
+         throw new IllegalArgumentException("array is null");
+      }
+   
+      
+      if (coll.size() == 0) {
+         throw new NoSuchElementException("array has length of 0");
+      }
+      
+      // search the collection looking for the f value
+      
+      T f = null;
+      for (T element : coll) {
+         if (comp.compare(element, key) <= 0) {
+            f = element;
+            break;
+         }
+      }
+      
+      for (T element : coll) {
+         
+         if ((comp.compare(element, key) <= 0) && (comp.compare(element, f) > 0)) {
+            f = element;
+         }
+      }
+      
+      
+      // if no floor is found
+      if (f == null) {
+         throw new NoSuchElementException("array has length of 0");
+      }
+   
+   
+      
+      return f;
+   
    }
 
 }

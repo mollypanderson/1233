@@ -273,16 +273,23 @@ public final class Selector {
          throw new IllegalArgumentException("array has length of 0");
       }
       
-      
+      // initialize inc
       int inc = 0;
    
+     // count the elements within the given range
       for (int i = 0; i < a.length; i++) {
          if ((a[i] >= low) && (a[i] <= high)) {
             inc++;
          }
       }
+      
+      // create a new array the relevant size
       int[] range = new int[inc];
       int j = 0;
+      
+      // for each element in the original array, check if the
+      // element is within the range and then add it to 
+      // the new array 
       for (int k = 0; k < a.length; k++) {
          
          if ((a[k] >= low) && (a[k] <= high)) {
@@ -315,6 +322,8 @@ public final class Selector {
          throw new IllegalArgumentException("array has length of 0");
       }
       
+      
+      // find the first value above the key and break
       for (int i = 0; i < a.length; i++) {
          if (a[i] >= key) {
             c = a[i];
@@ -323,6 +332,8 @@ public final class Selector {
          
       }
       
+      // loop through the array, finding the ceiling value
+      // greater than the given key 
       for (int i = 0; i < a.length; i++) {
          
          if ((a[i] >= key) && (a[i] < c)) {
