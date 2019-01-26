@@ -153,6 +153,129 @@ public class SelectorTest {
       Integer expected = 3;
       Assert.assertEquals(expected, floor);
    }
+   
+   @Test
+   public void testkminTypical1() {
+      Collection<Integer> coll = Arrays.<Integer>asList(new
+         Integer[]{3, 69, 45, 777, 420});
+      Comparator<Integer> comp = 
+         new Comparator<Integer>() {
+            public int compare(Integer i1, Integer i2) {
+               return i1.compareTo(i2);
+            }
+         };
+      Integer kmin = Selector.kmin(coll, 3, comp);
+      Integer expected = 69;
+      Assert.assertEquals(expected, kmin);
+   }
+   
+   @Test
+   public void testkminTypical2() {
+      Collection<Integer> coll = Arrays.<Integer>asList(new
+         Integer[]{2, 8, 7, 3, 4});
+      Comparator<Integer> comp = 
+         new Comparator<Integer>() {
+            public int compare(Integer i1, Integer i2) {
+               return i1.compareTo(i2);
+            }
+         };
+      Integer kmin = Selector.kmin(coll, 1, comp);
+      Integer expected = 2;
+      Assert.assertEquals(expected, kmin);
+   }
+
+   
+   @Test
+   public void testkminTypical3() {
+      Collection<String> coll = Arrays.<String>asList(new
+         String[]{"A", "Z", "R", "I", "E"});
+      Comparator<String> comp = 
+         new Comparator<String>() {
+            public int compare(String s1, String s2) {
+               return s1.compareTo(s2);
+            }
+         };
+      String kmin = Selector.kmin(coll, 2, comp);
+      String expected = "E";
+      Assert.assertEquals(expected, kmin);
+   }
+   
+   @Test
+   public void testkminTypical4() {
+      Collection<Integer> coll = Arrays.<Integer>asList(new
+         Integer[]{3});
+      Comparator<Integer> comp = 
+         new Comparator<Integer>() {
+            public int compare(Integer i1, Integer i2) {
+               return i1.compareTo(i2);
+            }
+         };
+      Integer kmin = Selector.kmin(coll, 1, comp);
+      Integer expected = 3;
+      Assert.assertEquals(expected, kmin);
+   }
+   
+   @Test
+   public void testkminTypical5() {
+      Collection<Integer> coll = Arrays.<Integer>asList(new
+         Integer[]{3,7,3,3,1,9,1,1,1,5});
+      Comparator<Integer> comp = 
+         new Comparator<Integer>() {
+            public int compare(Integer i1, Integer i2) {
+               return i1.compareTo(i2);
+            }
+         };
+      Integer kmin = Selector.kmin(coll, 2, comp);
+      Integer expected = 3;
+      Assert.assertEquals(expected, kmin);
+   }
+
+   @Test
+   public void testkmaxTypical1() {
+      Collection<Integer> coll = Arrays.<Integer>asList(new
+         Integer[]{3, 69, 45, 777, 420});
+      Comparator<Integer> comp = 
+         new Comparator<Integer>() {
+            public int compare(Integer i1, Integer i2) {
+               return i1.compareTo(i2);
+            }
+         };
+      Integer kmax = Selector.kmax(coll, 3, comp);
+      Integer expected = 69;
+      Assert.assertEquals(expected, kmax);
+   }
+   
+  
+   
+   @Test
+   public void testkmaxTypical2() {
+      Collection<Integer> coll = Arrays.<Integer>asList(new
+         Integer[]{5, 7});
+      Comparator<Integer> comp = 
+         new Comparator<Integer>() {
+            public int compare(Integer i1, Integer i2) {
+               return i1.compareTo(i2);
+            }
+         };
+      Integer kmax = Selector.kmax(coll, 1, comp);
+      Integer expected = 7;
+      Assert.assertEquals(expected, kmax);
+   }
+   
+   @Test
+   public void testkmaxTypical3() {
+      Collection<String> coll = Arrays.<String>asList(new
+         String[]{"A", "Z", "R", "I", "E"});
+      Comparator<String> comp = 
+         new Comparator<String>() {
+            public int compare(String s1, String s2) {
+               return s1.compareTo(s2);
+            }
+         };
+      String kmax = Selector.kmax(coll, 2, comp);
+      String expected = "R";
+      Assert.assertEquals(expected, kmax);
+   }
 
 
 

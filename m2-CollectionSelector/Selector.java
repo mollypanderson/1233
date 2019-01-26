@@ -152,19 +152,69 @@ public final class Selector {
          throw new NoSuchElementException("no kth value: k is less than 1");
       }
       
+      if (k > coll.size()) {
+         throw new NoSuchElementException("no kth value: k is less the number of" 
+                              + " values in the collection");
+      }
       
+      
+      
+      // make a copy of the collection as an ArrayList
+      ArrayList<T> kminList = new ArrayList<T>();
+      
+      for (T element : coll) {
+         kminList.add(element);
+            
+      }
+   
       
       // sort the array into whatever order, using comp as the param
-      java.util.Collections.sort(coll, comp);
+      java.util.Collections.sort(kminList, comp);
       
-      // count distinct values in coll
       
       // create a new array with only distinct values
+      ArrayList<T> uniqueList = new ArrayList<T>();
+      
+      if ((k == 1) && (kminList.size() == 1)) {
+         return kminList.get(0);
+      }
+      
+      uniqueList.add(kminList.get(0));
+      
+      for (int i = 1; i < kminList.size() - 1; i++) {
+         if (i == 1) {
+            if ((!(comp.compare(kminList.get(0), kminList.get(1)) == 0)) && 
+               (!(comp.compare(kminList.get(1), kminList.get(2)) == 0))) {
+               uniqueList.add(kminList.get(1));
+            }
+                        
+         
+         } 
+         else if (!(comp.compare(kminList.get(i - 1), kminList.get(i)) == 0)) {
+            uniqueList.add(kminList.get(i));
+         
+         }
+         
+         
+      }
+      
+      // if the last two values are unique, add the last value to uniqueList
+      if (!(comp.compare(kminList.get(kminList.size() - 2), kminList.get(kminList.size() - 1)) == 0 )) {
+         uniqueList.add(kminList.get(kminList.size() - 1));
+      }
+      
+     
+      
+      if (k > uniqueList.size()) {
+         throw new NoSuchElementException("no kth value: k is greater than" 
+                            + " the number of distinct values");
+      }
       
       // save kminimum value
+      T kminimum = uniqueList.get(k - 1);
       
       
-      return null;
+      return kminimum;
    }
 
 
@@ -183,8 +233,70 @@ public final class Selector {
     * @throws        NoSuchElementException as per above
     */
    public static <T> T kmax(Collection<T> coll, int k, Comparator<T> comp) {
-      return null;
+      // collection is null, illegalargumentexception
+      if (coll == null) {
+         throw new IllegalArgumentException("collection is null");
+      }
+      
+      // comparator is null, illegalargumentexception
+      if (comp == null) {
+         throw new IllegalArgumentException("Comparator is null");
+      }
+      
+      // collection is empty, nosuchelementexception
+      if (coll.size() == 0) {
+         throw new NoSuchElementException("collection is empty");
+      }
+      
+      // no kth min value (k < 1, k > coll.size(), k > distinct values in coll), nosuchelementexception
+      if (k < 1) {
+         throw new NoSuchElementException("no kth value: k is less than 1");
+      }
+      
+      if (k > coll.size()) {
+         throw new NoSuchElementException("no kth value: k is less the number of" 
+                              + " values in the collection");
+      }
+      
+      
+      
+      // make a copy of the collection as an ArrayList
+      ArrayList<T> kmaxList = new ArrayList<T>();
+      
+      for (T element : coll) {
+         kmaxList.add(element);
+            
+      }
+   
+      
+      // sort the array into whatever order, using comp as the param
+      java.util.Collections.sort(kmaxList, comp);
+      
+      
+      // create a new array with only distinct values
+      ArrayList<T> uniqueList = new ArrayList<T>();
+      
+      
+      for (int i = 0; i < kmaxList.size() - 1; i++) {
+         if (!(comp.compare(kmaxList.get(i), kmaxList.get(i + 1)) == 0)) {
+            uniqueList.add(kmaxList.get(i));
+         }
+      }
+      
+      if (k > uniqueList.size()) {
+         throw new NoSuchElementException("no kth value: k is greater than" 
+                           + " the number of distinct values");
+      }
+      
+      // save kminimum value
+      T kmaximum = uniqueList.get(uniqueList.size() - k + 1);
+      
+      
+      return kmaximum;
    }
+
+
+   
 
 
    /**
