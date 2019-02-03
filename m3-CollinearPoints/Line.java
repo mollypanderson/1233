@@ -23,6 +23,7 @@ public class Line implements Comparable<Line>, Iterable<Point> {
     */
    public Line() {
       line = new TreeSet<Point>();
+   
    }
    
    /** 
@@ -30,9 +31,25 @@ public class Line implements Comparable<Line>, Iterable<Point> {
     * Collection c.
     */
    public Line(Collection<Point> c) {
-      // takes a a collection of Point objects and creates a lines a line with 
-      // all the distinct collinear points
+      // takes a a collection of Point objects
+      // iterate thru whole collection c
+      // add every item (the add method filters them as necessary)
+      line = new TreeSet<Point>();
+      for (Point element : c) {
+         if (line.size() < 2) {
+            line.add(element);
+         }
+         else {
+            if (element.slopeOrder.compare(line.first(), line.last()) == 0) {
+               line.add(element);
+            
+            }
+         } 
+      
+      
+      }
    }
+   
  
    /** 
     * Adds the point p to this line if p is collinear with all points already
@@ -40,7 +57,27 @@ public class Line implements Comparable<Line>, Iterable<Point> {
     * line is changed as a result, false otherwise.
     */
    public boolean add(Point p) {
-      return false;
+      boolean result = false;
+      // if line.size() == 0 or 1, just add it. 
+      // if list.size() >= 2, do the following: 
+         // find slope of first two Point objects in line
+         // compare slope of first.slopeTo(last) with b.slopeTo(p)         
+            // if result of comparePointsBySlope == 0, 
+            // this.add(p) to line and return true
+            // else, return false and do not add
+      if (line.size() < 2) {
+         result = line.add(p);
+      }
+      
+      
+      else {
+         if (p.slopeOrder.compare(line.first(), line.last()) == 0) {
+            result = line.add(p);
+         }
+      }
+      
+      
+      return result;
    }
    
    /** 
@@ -48,7 +85,12 @@ public class Line implements Comparable<Line>, Iterable<Point> {
     * contains no points.
     */
    public Point first() {
-      return null;
+      Point result = null;
+      if (line.size() > 0) {
+         result = line.first();
+      }
+      
+      return result;
    }
    
    /** 
@@ -56,14 +98,18 @@ public class Line implements Comparable<Line>, Iterable<Point> {
     * contains no points.
     */
    public Point last() {
-      return null;
+      Point result = null;
+      if (line.size() > 0) {
+         result = line.last();
+      }
+      return result;
    }
    
    /** 
     * Returns the number of points in this line.
     */
    public int length() {
-      return -99;
+      return line.size();
    }
 
    /**
@@ -77,8 +123,44 @@ public class Line implements Comparable<Line>, Iterable<Point> {
     */
    @Override
    public int compareTo(Line that) {
-      return -99;
-   }
+      int returnValue = -2;
+      if (this.first() == null) {
+        // Both lines are empty
+         if (that.first() == null) {
+            returnValue = 0;
+         } // Only "this" is empty
+         else {
+            returnValue = -1;
+         }
+      }
+      
+      // Only "that" is empty
+      else if (that.first() == null) {
+         returnValue = 1;
+      }
+      else if ((this.first().compareTo(that.first()) == 0) && (this.last().compareTo(that.last()) == 0)) {
+         returnValue = 0;
+      }
+      //else if (this.length() == 0 && that.length() == 0) {
+      //returnValue = 0;
+      //}
+      else if (this.first().compareTo(that.first()) > 0) {
+         returnValue = 1;
+      }
+      else if (this.first().compareTo(that.first()) < 0) {
+         returnValue = -1;
+      }
+      else {
+         if (this.last().compareTo(that.last()) > 0) {
+            returnValue = 1;
+         }
+         else {
+            returnValue = -1;
+         }
+      }
+   
+      return returnValue;    
+   }     
 
    /** 
     * Provide an iterator over all the points in this line. The order in which
@@ -86,7 +168,9 @@ public class Line implements Comparable<Line>, Iterable<Point> {
     */
    @Override
    public Iterator<Point> iterator() {
-      return null;
+      //iterator that uses ascending natural order
+      //line.iterator();
+      return line.iterator();
    }
    
    /** 

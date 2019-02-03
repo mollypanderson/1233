@@ -172,6 +172,21 @@ public class PointTest {
       Assert.assertEquals(expected, actual);
          
    }
+   
+   @Test public void ComparePointsBySlopeTest3() {
+   
+      Point a = new Point(4, 4);
+      Point b = new Point(1, 1);
+      Point c = new Point(3, 7);
+      
+      int expected = -1;
+      int actual = c.slopeOrder.compare(a, b);
+      Assert.assertEquals(expected, actual);
+         
+   }
+   
+         
+   
 
    
    
