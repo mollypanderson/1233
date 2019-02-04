@@ -75,10 +75,10 @@ public class Extractor {
       // sort new array
       Arrays.sort(sortedPoints);
       
-      for (int i = 0; i < sortedPoints.length; i++) {
-         for (int j = 1; j < sortedPoints.length; j++) {
-            for (int k = 2; k < sortedPoints.length; k++) {
-               for (int l = 3; l < sortedPoints.length; l++) {
+      for (int i = 0; i < points.length; i++) {
+         for (int j = i + 1; j < points.length; j++) {
+            for (int k = j + 1; k < points.length; k++) {
+               for (int l = k + 1; l < points.length; l++) {
                      // create temp collection of these 4 points
                   //Point[] temp = new Point[4];
                   Collection<Point> c = new TreeSet<Point>();
@@ -115,7 +115,60 @@ public class Extractor {
     */
    public SortedSet<Line> getLinesFast() {
       lines = new TreeSet<Line>();
+      // create a copy of points. This copy will be sorted with respect to
+      // the slopeTo a given reference point on each 
+      // interation of the loop below 
+      
+      //copy of points array to sort (sort on each iteration using a
+      // different reference point
+      Point[] pointsBySlope = Arrays.<Point>copyOf(points, points.length);
+      
+      // arrange points in ascending natural order
+      Arrays.sort(points);
+      
+      // on each iteration, ID a set of 3+ points that are mutually collinear
+      // with the ref point
+      
+      for (int refPoint = 0; refPoint < points.length; refPoint++) {
+         // SORT into ascending order of slope to the reference point
+         
+         Arrays.<Point>sort(pointsBySlope, points[refPoint].slopeOrder);
+         
+         // SCAN sorted array
+         // add refPoint to line object
+         
+         
+         //line.add(pointsBySlope[0]);
+         //Collection<Point> c = new TreeSet<Point>();         
+         Line line = new Line(); 
+         line.add(points[refPoint]);
+         
+         for (int currentPoint = 1; currentPoint < pointsBySlope.length;) {
+            // temp line object
+            
+                            
+            // add currentPoint. it won't add unless collinear  
+            
+            while (line.add(pointsBySlope[currentPoint])) {
+               line.add(pointsBySlope[currentPoint]);
+               currentPoint++;
+            }
+            if (line.add(pointsBySlope[currentPoint]) == false) {
+               currentPoint++;
+            }
+            
+            if (line.length() >= 4) {
+               lines.add(line);
+            }
+               
+               
+               
+         }
+         
+      }
+      
+      
+      
       return lines;
-   }
-   
+   }      
 }

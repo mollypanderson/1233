@@ -37,11 +37,11 @@ public class Line implements Comparable<Line>, Iterable<Point> {
       line = new TreeSet<Point>();
       for (Point element : c) {
          if (line.size() < 2) {
-            line.add(element);
+            this.add(element);
          }
          else {
             if (element.slopeOrder.compare(line.first(), line.last()) == 0) {
-               line.add(element);
+               this.add(element);
             
             }
          } 
