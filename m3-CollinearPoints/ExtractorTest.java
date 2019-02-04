@@ -209,7 +209,9 @@ public class ExtractorTest {
       SortedSet<Line> expected = x;
       x.add(z);
       x.add(m);
-      SortedSet<Line> actual = ex.getLinesFast();  
+      SortedSet<Line> actual = ex.getLinesFast(); 
+      Assert.assertEquals(expected, actual);
+   
       
    }
 

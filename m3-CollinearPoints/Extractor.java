@@ -143,31 +143,27 @@ public class Extractor {
          Line line = new Line(); 
          line.add(points[refPoint]);
          
-         for (int currentPoint = 1; currentPoint < pointsBySlope.length;) {
-            // temp line object
+         for (int currentPoint = 1; currentPoint < pointsBySlope.length; currentPoint++) {
             
-                            
-            // add currentPoint. it won't add unless collinear  
-            
-            while (line.add(pointsBySlope[currentPoint])) {
-               line.add(pointsBySlope[currentPoint]);
-               currentPoint++;
-            }
+            //line.add(pointsBySlope[currentPoint]);
             if (line.add(pointsBySlope[currentPoint]) == false) {
-               currentPoint++;
+               if (line.length() >= 4) {
+                  lines.add(line);
+               }
+               line = new Line();
+               line.add(points[refPoint]);
+               line.add(pointsBySlope[currentPoint]);
+            
             }
             
-            if (line.length() >= 4) {
-               lines.add(line);
-            }
-               
-               
-               
+                               
          }
+         if (line.length() >= 4) {
+            lines.add(line);
+         }
+      
          
       }
-      
-      
       
       return lines;
    }      
