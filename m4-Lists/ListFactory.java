@@ -3,9 +3,9 @@
  * Implements the factory method pattern (https://en.wikipedia.org/wiki/Factory_method_pattern)
  * for lists in this assignment.
  *
- * @author YOUR NAME (YOU@auburn.edu)
+ * @author Molly Anderson (MPA0012@auburn.edu)
  * @author Dean Hendrix (dh@auburn.edu)
- * @version TODAY
+ * @version 2019-02-04
  */
 public class ListFactory {
 
