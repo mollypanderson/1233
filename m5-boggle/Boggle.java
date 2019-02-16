@@ -2,6 +2,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -21,7 +22,11 @@ public class Boggle implements WordSearchGame {
 
 // instantiate a lexicon object
    TreeSet<String> lexicon = new TreeSet<String>();
-   String[] board;
+   String[][] board;
+   public int BOARD_SIZE;
+   public boolean[][] visited;
+   
+   
 
 
    private String getFirstWord(String text) {
@@ -37,6 +42,10 @@ public class Boggle implements WordSearchGame {
  */
    public void loadLexicon(String fileName) {
       // take a param of fileName and iterate through, adding each item. 
+      
+      if (fileName == null) {
+         throw new IllegalArgumentException("input is null.");
+      }
       
       try {
          // create scanner object
@@ -83,20 +92,29 @@ public class Boggle implements WordSearchGame {
       }
       
       
+      BOARD_SIZE = x;
+      board = new String[BOARD_SIZE][BOARD_SIZE];
       
-      board = new String[letterArray.length];
-      for (int i = 0; i < board.length; i++) {
-         board[i] = letterArray[i];
+      
+      int k = 0;
+      for (int i = 0; i < BOARD_SIZE; i++) {
+         for (int j = 0; j < BOARD_SIZE; j++) {
+            board[i][j] = letterArray[k];
+            k++;
+         }
       }
    }
    
+   /**
+    * @return boardToString.
+    */
    public String getBoard() {
       String boardToString = "";
-      int x = (int) Math.sqrt(board.length);
+      int x = board.length;
       int k = 0;
-      for (int j = 0; j < x; j++) { 
-         for (int i = 0; i < x; i++) {
-            boardToString += board[k] + "   ";
+      for (int i = 0; i < BOARD_SIZE; i++) { 
+         for (int j = 0; j < BOARD_SIZE; j++) {
+            boardToString += board[i][j] + "   ";
             k++;
          }
          boardToString += "\n";
@@ -165,25 +183,201 @@ public class Boggle implements WordSearchGame {
    }
    
    /**
- * @param wordToCheck. 
+ * @param wordToCheck
  * @return path.
  */
    public List<Integer> isOnBoard(String wordToCheck) {
+      // checks if param word is on the board (can be put together with the
+      // strings in the array)
+      //
+      visited = new boolean[BOARD_SIZE][BOARD_SIZE];
+      // 1) initialize an empty list
       List<Integer> path = new ArrayList<>();
+      StringBuilder wordSoFar = new StringBuilder();
+      wordSoFar.append("");
+      
+      // 2) launch dfs (from potentially every position on the board)
+      
+      // for each board position, 
+      
+      for (int i = 0; i < BOARD_SIZE; i++) {
+         for (int j = 0; j < BOARD_SIZE; j++) {
+            if (wordToCheck.startsWith(board[i][j])) {
+               if  
+                  (dfsOneWord(i, j, wordToCheck, 
+                  wordSoFar, path));
+                  
+            }
+         }
+      }
+      
+         // if the string at this position is a prefix for wordToCheck
+         // aka if wordToCheck starts with the contents of the current board position
+         
+               // if (dfsOneWord());
+      
+      
+      
       return path;
    }
+   
+   private boolean dfsOneWord(int i, int j, String wordToCheck, 
+               StringBuilder wordSoFar, List<Integer> path) {
+               // fields 
+   
+      //GridSearcher gs = new GridSearcher();
+      Position pos = new Position(i, j);
+      
+      
+      // check if the position on the board (is it valid?) if not, return false
+      if (!(pos.isValid(pos))) {
+         return false;
+      }
+      
+      // check if you already visited this position. if yes, return false.
+      if (visited[pos.x][pos.y]) {
+         return false;
+      }
+      
+      // is this a dead end? if word so far is CAX for CATALOG, dead end, and need to back up (return false). 
+      if (!(wordToCheck.startsWith(wordSoFar.toString()))) {
+         return false;
+      }
+      
+      // we haven't been here before && wordSoFar is a prefix of wordToCheck. so far so good. continue search. 
+      // visit and process this position
+         // 1) mark it visited
+      pos.visit(pos);
+         // 2) add the contents of the current board position to wordSofar (concat to the string)
+      wordSoFar.append(board[i][j]);
+         // 3) add row major (index) to path List
+      int index = (int) (i * BOARD_SIZE) + (j);
+      path.add(index);
+         
+      // if ( wordSoFar.equals(wordToCheck))  return true;
+      if (wordSoFar.toString().equals(wordToCheck)) {
+         return true;
+      }
+      // continue search from neighbors
+         // for each neighbor
+         
+         
+      for (Position p : pos.neighbors()) {
+       // if (dfsOneWord(i (new row index), j (new column index), wordToCheck, wordSoFar, path));
+               // return true;
+         if (dfsOneWord(p.x, p.y, wordToCheck, wordSoFar, path)) {
+            return true;
+         }
+      }
+            
+      // if you reach this point, clean up and backtrack. 
+      // 1) mark current position as unvisited
+      pos.unvisit(pos);
+      
+      
+      // 2) remove the contents of the current board position from wordSoFar
+      // take wordSoFar (hoq) and remove the characters at the current board position from it, so length-- sort of
+      String temp =  wordSoFar.substring(0, (wordSoFar.length() - (board[i][j].length())));
+      
+      wordSoFar.replace(0, wordSoFar.length(), temp); 
+      
+      // 3) remove row major (index) to path List
+      path.remove(path.size() - 1);
+      
+    
+     
+      return false; 
+      
+   }
+   
+   
+
+            
+   class Position {
+      int[][] grid; // represents the search space, record order visited on this
+      // t/f as to whether the cells have been visited
+      int width = BOARD_SIZE;
+      int height = BOARD_SIZE;
+      final int MAX_NEIGHBORS = 8; 
+      int order; // counter that keeps track of the order explored.
+       
+      
+      int x;
+      int y;
+         
+        // constructor for Position object x,y   
+      public Position(int x, int y) {
+         this.x = x;
+         this.y = y;
+         
+      }   
+      
+      private boolean isValid(Position p) {
+         return (p.x >= 0) && (p.x < BOARD_SIZE) &&
+               (p.y >= 0) && (p.y < BOARD_SIZE);
+      }
+    
+            
+      @Override
+         public String toString() {
+         return "(" + x + ", " + y + ")";
+      }
+        
+      public Position[] neighbors() {
+         Position[] nbrs = new Position[MAX_NEIGHBORS];
+         int count = 0;
+         Position p;
+            // generate all ___ neighbor positions
+            // add to return value if valid
+         for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+               if (!((i ==0) && (j == 0))) {
+                  p = new Position(x + i, y + j);
+                  if (isValid(p)) {
+                     nbrs[count++] = p;
+                  }
+               }
+            }
+         }
+            
+         return Arrays.copyOf(nbrs, count);
+      }
+         
+      
+         
+      //private boolean isVisited(Position p) {
+         //return visited[p.x][p.y];
+      //}
+         
+      private void visit(Position p) {
+         visited[p.x][p.y] = true;
+      }
+         
+      private void unvisit(Position p) {
+         visited[p.x][p.y] = false;
+      }
+         
+      private void process(Position p) {
+         grid[p.x][p.y] = order++;
+      }
+        
+   }
+      
+   //}
    
    /**
  * @param args.
  */
    public static void main(String[] args) {
+      
       WordSearchGame game = WordSearchGameFactory.createGame();
-      game.loadLexicon("wordfiles/words_tiny.txt");
-      System.out.println(game.isValidWord("small"));
-      System.out.println(game.isValidPrefix("d"));
-      System.out.println(game.isValidPrefix("sm"));
-      System.out.println(game.isValidPrefix("lexi"));
-      System.out.println(game.isValidPrefix("dsds"));
+      game.loadLexicon("wordfiles/words.txt");
+      game.setBoard(new String[]{"E", "E", "C", "A", "A", "L", "E", "P", "H", 
+                                 "N", "B", "O", "Q", "T", "T", "Y"});
+      System.out.print("LENT is on the board at the following positions: ");
+      System.out.println(game.isOnBoard("LENT"));
+      System.out.print("POPE is not on the board: ");
+      System.out.println(game.isOnBoard("POPE"));
       
    }
 
