@@ -126,11 +126,65 @@ public class Boggle implements WordSearchGame {
    
    public SortedSet<String> getAllValidWords(int minimumWordLength) {
       SortedSet<String> s = new TreeSet<String>();
+      if (minimumWordLength < 1) {
+         throw new IllegalArgumentException("minimumWordLength should be >= 1");
+      }
+      
+      if (lexicon.size() == 0) {
+         throw new IllegalStateException("loadLexicon has not been called.");
+      }
+      
+      // loop through entire lexicon 
+         // isOnBoard = true?
+         // .add to SortedSet s
+       
+         
+      for (String w : lexicon) {
+         if (w.length() >= minimumWordLength) {
+            if (isOnBoard(w).size() >= 1) {
+               if (w.length() >= minimumWordLength) {
+                  s.add(w);
+               }
+            }
+         }
+      }
+      
+      
+      
       return s;
    }
    
    public int getScoreForWords(SortedSet<String> words, int minimumWordLength) {
-      return 0;
+      // iterate over loop of words found (SortedSet words)
+         // make sure it meets min word length requirement (>= minimumWordLength)
+         // make sure it's a valid for (isValidWord = true)
+         // make sure it's on the board (isOnBoard = true)
+      
+      if (minimumWordLength < 1) {
+         throw new IllegalArgumentException("minimumWordLength should be >= 1");
+      }
+      
+      if (lexicon == null) {
+         throw new IllegalStateException("loadLexicon has not been called.");
+      }
+      
+      
+      int score = 0;
+         
+      for (String w : words) {
+         if (w.length() >= minimumWordLength) {
+            if (isValidWord(w)) {
+               if (!(isOnBoard(w) == null)) {
+                     // calculate score. 1 + (word length - minimum length)
+                  score += 1 + (w.length() - minimumWordLength);
+               }
+            }
+         }
+      }
+      
+      
+      
+      return score;
    }
    
    /**
@@ -376,8 +430,15 @@ public class Boggle implements WordSearchGame {
                                  "N", "B", "O", "Q", "T", "T", "Y"});
       System.out.print("LENT is on the board at the following positions: ");
       System.out.println(game.isOnBoard("LENT"));
+      SortedSet<String> s = new TreeSet<>();
+      s.add("LENT");
+      
+      System.out.println(game.getScoreForWords(s, 2));
       System.out.print("POPE is not on the board: ");
       System.out.println(game.isOnBoard("POPE"));
+      System.out.println("All words of length 6 or more: ");
+      System.out.println(game.getAllValidWords(6));
+   
       
    }
 
